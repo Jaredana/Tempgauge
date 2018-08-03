@@ -1,0 +1,6 @@
+1. Make a welcome landing page with a dropdown form for selecting schools (use forms.Select widget)
+2. Make the welcome page actually take you to a new page for a specific school
+3. Ensure that feature works for 2 different schools (dropdown has 2 or more choices, also include schools in admin so more can be added through admin panel)
+4. Finish a single schools .html file, get it looking nice using CSS if need be and include some data on there
+5. Attempt to extend the template for the finished .html onto every schools html template page
+More Coming...

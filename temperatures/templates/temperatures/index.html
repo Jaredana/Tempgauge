@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+<body>
+
+<p>Hello World {{TempReading.temp}}</p>
+<ul>
+{%for TempReading in foobar %}
+	<p>{{TempReading.date}}</p>
+	<li>{{TempReading.temp}} C</li>
+	<li>{{TempReading.humidity}}</li>
+{%endfor%}
+</ul>
+
+
+</body>
+</html>
