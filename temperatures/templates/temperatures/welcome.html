@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<h4>Welcome to the landing page, please select your school to display data for</h4>
+</head>
+<body>
+
+<form action="{% url 'welcome' %}" method="POST">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="{{current_name}}" id="choice"/>
+</form>
+
+</body>
+</html>

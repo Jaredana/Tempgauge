@@ -12,15 +12,6 @@ class TempReading(models.Model):
         return self.temp
 
 class School(models.Model):
-    sabin = 'SAB'
-    schoolnames = (
-            (sabin, 'Sabin'),
-    )
-    schoolchoice = models.CharField(
-            max_length = 40,
-            choices = schoolnames,
-            default = sabin,
-    )
-    def __str__(self):
-        return self.schoolchoice
-
+	schoolname = models.CharField(max_length=100, default='')
+	def __str__(self):
+		return self.schoolname

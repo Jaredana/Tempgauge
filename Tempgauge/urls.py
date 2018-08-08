@@ -19,6 +19,9 @@ from django.contrib import admin
 from temperatures import views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-	url('', views.index, name='index'),
+    path('^admin/', admin.site.urls),
+	path(r'', views.welcome, name ='default'),
+	path(r'welcome', views.welcome, name = 'welcome'),
+	path(r'^welcome/schools/<school>/index.html$', views.detail, name='school'),
+	#url(r'index', views.index, name='index'),
 ]
