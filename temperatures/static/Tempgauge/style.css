@@ -1,0 +1,22 @@
+.Readings {
+	border-collapse:collapse; 
+	border-spacing:0;
+}
+
+#main_logo {
+	max-height: auto;
+	width: 100%;
+}
+
+.tg {
+	font-family:Arial, sans-serif;
+	font-size:14px;
+	font-weight:normal;
+	padding:10px 5px;
+	border-style:solid;
+	border-width:1px;
+	overflow:hidden;
+	word-break:normal;
+	border-color:black;
+}
+

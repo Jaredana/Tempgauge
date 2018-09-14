@@ -1,19 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
 
+<html lang="en">
+
+{%load static %}
+<link rel="stylesheet" type="text/css" href="{%static 'Tempgauge/style.css' %}">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+
+<head>
+<img src="{%static 'Tempgauge/nclogo.png' %}" alt="Logo" id="main_logo" style="height:150px;width:auto;display:grid;">
+<h1>Sabin</h1>
 </head>
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
 <body>
 
-<p>Hello World {{TempReading.temp}}</p>
-<ul>
-{%for TempReading in context %}
-	<p>{{TempReading.date}}</p>
-	<li>{{TempReading.temp}} C</li>
-	<li>{{TempReading.humidity}}</li>
-{%endfor%}
-</ul>
 
+<form action= "{%url 'getdata' %}" id="filter" method="POST">
+	{% csrf_token %}
+	<select name="filteroptions">
+  		<option value="7">7</option>
+  		<option value="30">30</option>
+	</select>
+	<input form="filter" type="submit" value="Submit">
+</form>
+
+<table class="table table-bordered" style="width:100%">
+{%for TempReading in context %}
+	<thead>
+		<tr>
+			<th>Date</th>
+			<th>Temperature(Farenheight)</th>
+			<th>Humidity(RH)</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th class="tg">{{TempReading.date}}</th>
+			<th class="tg">{{TempReading.temp}}</th>
+			<th class="tg">{{TempReading.humidity}}</th>
+		</tr>
+	</tbody>
+{%endfor%}
+</table>
 
 </body>
+
+
+
 </html>
