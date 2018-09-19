@@ -20,9 +20,11 @@ from temperatures import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-	path(r'', views.welcome, name ='default'),
+	path(r'', views.index, name ='index'),
+    url(r'^logged', views.logged, name='logged'),
 	path(r'welcome', views.welcome, name = 'welcome'),
-	url(r'^welcome/schools/Sabin/refreshdetail.html$', views.refreshdetail, name='getdata'),
-	path(r'^welcome/schools/<school>/index.html$', views.detail, name='school'),
+    url(r'^welcome/schools/Sabin/refreshdetail.html$', views.refreshdetail, name='getdata'),
+    url(r'^welcome/schools/Sabin/refreshdetail.html/download$', views.download_data, name='download_data'),
+	path(r'welcome/schools/<school>/index.html$', views.detail, name='school'),
 	#url(r'index', views.index, name='index'),
 ]

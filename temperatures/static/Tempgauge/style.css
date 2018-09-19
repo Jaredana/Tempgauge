@@ -5,7 +5,12 @@
 
 #main_logo {
 	max-height: auto;
+	height:150px;
 	width: 100%;
+}
+
+#forms {
+	padding-left: 20px;
 }
 
 .tg {
@@ -19,4 +24,6 @@
 	word-break:normal;
 	border-color:black;
 }
+
+
 

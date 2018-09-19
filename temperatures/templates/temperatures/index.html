@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
 <head>
+	<body>
 
+		<div class="jumbotron jumbotron-fluid">
+			<img src="{%static 'Tempgauge/nclogo.png' %}" alt="Logo" id="main_logo" style="height:150px;width:auto;display:grid;" class="">
+			<h6 style="padding-bottom: 20px;">Please Enter your login:</h6>
+			<form action="{%url 'logged' %}" method="POST" id=login>
+				{% csrf_token %}
+				<label for="your_name">Your name: </label>
+    			<input id="your_name" type="text" name="your_name" value="">
+    			<br>
+    			<br>
+    			<label for="your_pass">Your Password: </label>
+    			<input id="your_pass" type="text" name="your_pass" value="">
+    			
+    			<input form="login" type="submit" value="OK">
+    		</form>
+	</body>
 </head>
-<body>
-
-<p>Hello World {{TempReading.temp}}</p>
-<ul>
-{%for TempReading in context %}
-	<p>{{TempReading.date}}</p>
-	<li>{{TempReading.temp}} C</li>
-	<li>{{TempReading.humidity}}</li>
-{%endfor%}
-</ul>
-
-
-</body>
 </html>

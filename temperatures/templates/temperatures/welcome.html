@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+{%load static %}
+<link rel="stylesheet" type="text/css" href="{%static 'Tempgauge/style.css' %}">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+
 <head>
-<h4>Welcome to the landing page, please select your school to display data for</h4>
+
+<div style="background: url({%static 'Tempgauge/gradient.png' %});background-position: center; padding-bottom: 20px;">
+<h1 style="font-family: open-sans">Sabin</h1>
+<img src="{%static 'Tempgauge/nclogo.png' %}" alt="Logo" id="main_logo" style="height:150px;width:auto;display:grid;" class="">
+</div>
+
+<h4>North Clackamas Server Temperature Monitoring</h4>
+<h6>Please Select your school to view data for</h6>
 </head>
+
 <body>
 
-<form action="{% url 'welcome' %}" method="POST">
+<form action="{% url 'welcome' %}" method="POST" id="schoolchoices">
     {% csrf_token %}
     {{form}}
-    <input type="submit" value="{{current_name}}" id="choice"/>
+    <input form="schoolchoices" type="submit" value="Submit" id="choice" class="btn btn-primary"/>
 </form>
 
 </body>
