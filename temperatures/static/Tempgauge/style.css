@@ -5,8 +5,11 @@
 
 #main_logo {
 	max-height: auto;
-	height:150px;
-	width: 100%;
+	height: 150px;
+	width: auto;
+	display: block;
+	position: relative;
+	bottom: 50px;
 }
 
 #forms {
@@ -23,6 +26,14 @@
 	overflow:hidden;
 	word-break:normal;
 	border-color:black;
+}
+
+#header {
+	background: url('gradient.png');
+	background-position: center;
+	background-size: contain;
+	height: 150px;
+	position: inline;
 }
 
 

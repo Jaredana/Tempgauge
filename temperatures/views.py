@@ -11,7 +11,7 @@ from .models import TempReading, School
 from .forms import Schools
 from django.utils import timezone
 import csv
-import datetime
+from datetime import datetime
 # Create your views here.
 def index(request):
 	#user = request.POST.get('your_user')
@@ -48,7 +48,7 @@ def welcome(request):
 
 def download_data(request):
 	filter = request.POST.get('downloadoptions')
-	filter = int(filter)
+	#filter = int(filter)
 	data = filter_date(filter)
 	response = HttpResponse(content_type='text/csv')
 	response['Content-Disposition'] = 'attachment; filename="filtered_data.csv"'
@@ -67,10 +67,12 @@ def detail(request, school):
 	context = {'context': readings}
 	return render(request, url, context)
 
-#This view is used to filter queries on a schools detail page. AKA lets the user sort between readings from the past 30 days to the past 7 days etc.
+#This view is used to filter queries on a schools detail page. AKA lets the user sort between readings from the past; this is a date in the format yyyy-mm-dd
 def refreshdetail(request):
 	filter = request.POST.get('filteroptions')
-	filter = int(filter)
+	if(type(filter)!= type(datetime)):
+		redirect("refreshdetail.html")
+	
 	data = filter_date(filter)
 	context = {'context': data}
 	return render(request, 'refreshdetail.html', context) 
@@ -80,8 +82,8 @@ def getschoolchoice(request):
 		choice = request.POST.get('schoolchoice')
 		return choice
 
-def filter_date(minus_days):
-	start_date = datetime.datetime.now()
-	end_date = datetime.datetime.today() - datetime.timedelta(days=minus_days)
+def filter_date(filter_date):
+	start_date = datetime.now()
+	end_date = datetime.strptime(filter_date, "%Y-%m-%d")
 	data = TempReading.objects.filter(date__lte=start_date, date__gte=end_date)
 	return data

@@ -4,22 +4,20 @@
 <link rel="stylesheet" type="text/css" href="{%static 'Tempgauge/style.css' %}">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
-<head>
-<div style="background: url({%static 'Tempgauge/gradient.png' %});background-position: center; padding-bottom: 20px;">
-<h1 style="font-family: open-sans">Sabin</h1>
-<img src="{%static 'Tempgauge/nclogo.png' %}" alt="Logo" id="main_logo" style="height:150px;width:auto;display:grid;" class="">
 
+<head>
+<div id="header">
+<h1 style="font-family: open-sans">Sabin</h1>
+<img src="{%static 'Tempgauge/nclogo.png' %}" alt="Logo" id="main_logo">
 </div>
 </head>
+
 <body>
 <div id="forms">
 	
 	<form action= "{%url 'getdata' %}" id="filter" method="POST">
 		{% csrf_token %}
-		<select name="filteroptions" class="form-control form-control-sm col-sm-2">
-  			<option value="7" >7 Days</option>
-  			<option value="30">30 Days</option>
-		</select>
+		<input name="filteroptions" class="form-control form-control-sm col-sm-2" type="date" id="datefilter">
 		<input form="filter" type="submit" value="Filter Data" class="btn btn-primary">
 	</form>
 	
@@ -55,9 +53,30 @@
 {%endfor%}
 </table>
 </body>
+{% block javascript %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<script>
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1 //january is 0
+var yyyy = today.getFullYear();
+if(dd < 10){
+	dd='0'+dd
+}
+if(mm < 10){
+	mm='0'+mm
+}
+today = yyyy+'-'+mm+'-'+dd;
+document.getElementById("datefilter").setAttribute("max", today);
+</script>
+
+
 <script>
 $(document).ready(function() {
     $('#example').DataTable();
 } );
 </script>
+{% endblock %}
 </html>
