@@ -1,7 +1,8 @@
 1. Ensure that feature works for 2 different schools (dropdown has 2 or more choices, also include schools in admin so more can be added through admin panel) //just need to add putnam template
 2. Finish a single schools .html file, get it looking nice using CSS if need be and include some data on there //sorta done, could be better
-3. Attempt to extend the template for the finished .html onto every schools html template page //as of now you can copy code and just change header. could make it pull from DB.
+3. Attempt to extend the template for the finished .html onto every schools html template page //as of now you can copy code and just change header. should try "extends" keyword
 4. Add more data
-
+5.Clean up login functionality code(try decorators) and extend functionality to all school templates
+6.Setup "regular" users with less perms
 
 More Coming...
