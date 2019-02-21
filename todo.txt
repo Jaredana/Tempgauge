@@ -4,5 +4,6 @@
 4. Add more data
 5.Clean up login functionality code(try decorators) and extend functionality to all school templates
 6.Setup "regular" users with less perms
+7.Setup a secondary branch in github for test development of features(and so if I destroy everything I can go back to safety)
 
 More Coming...
