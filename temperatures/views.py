@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from .models import TempReading, School
 from .forms import Schools
 from django.utils import timezone
@@ -22,29 +22,43 @@ def index(request):
 		#return redirect('welcome')
 	#else:
 		#return redirect('welcome')
+	logout(request)
 	return render(request, 'temperatures/index.html')
 	
 
 def logged(request):
+
 	user = request.POST.get('your_name')
 	password = request.POST.get('your_pass')
-	print(user)
-	print(password)
 	user = authenticate(request, username=user, password=password)
 	if(user is not None):
 		login(request, user)
 		return redirect('welcome')
 	else:
 		return redirect('index')
-	
+
+def my_logout(request):
+	logout(request)
+	return redirect('index')
+
 #Defines the welcome page where the user selects their school to view more details about
 def welcome(request):
-	form = Schools()
-	if(request.method == 'POST'):
-		choice = request.POST.get('schoolchoice') #Converted the school object to string for url formatting
-		return redirect('school', school = choice)
+	#need to check if user is logged in before loading page
+	if(request.user.is_authenticated):
+		print('test')
+		form = Schools()
+		return render(request, 'temperatures/welcome.html', {'form':form})
+	else:
+		print('text')
+		return redirect('index')
 	
-	return render(request, 'temperatures/welcome.html', {'form':form})
+	#else:
+	#	choice = request.POST.get('schoolchoice') #Converted the school object to string for url formatting
+	#	return redirect('school', school = choice)
+	
+def gotodetail(request):
+	choice = request.POST.get('schoolchoice') #Converted the school object to string for url formatting
+	return redirect('school', school = choice)
 
 def download_data(request):
 	filter = request.POST.get('downloadoptions')
@@ -64,7 +78,7 @@ def download_data(request):
 def detail(request, school):
 	url = 'schools/' + school + '/index.html'
 	readings = TempReading.objects.filter(school=school)
-	context = {'context': readings}
+	context = {'context': readings, 'name' : User.username}
 	return render(request, url, context)
 
 #This view is used to filter queries on a schools detail page. AKA lets the user sort between readings from the past; this is a date in the format yyyy-mm-dd
@@ -74,7 +88,7 @@ def refreshdetail(request):
 		redirect("refreshdetail.html")
 	
 	data = filter_date(filter)
-	context = {'context': data}
+	context = {'context': data, 'name' : User.username}
 	return render(request, 'refreshdetail.html', context) 
 	
 def getschoolchoice(request):

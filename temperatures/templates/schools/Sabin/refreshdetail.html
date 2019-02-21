@@ -22,15 +22,12 @@
 	</form>
 	
 
-
 	<form action= "{%url 'download_data' %}" id="download" method="POST" style="margin-top: 20px;">
 		{% csrf_token %}
-		<select name="downloadoptions" class="form-control form-control-sm col-sm-2">
-  			<option value="7" >7 Days</option>
-  			<option value="30">30 Days</option>
-		</select>
-		<input form="download" type="submit" value="Download Data" class="btn btn-primary" >
+		<input name="downloadoptions" class="form-control form-control-sm col-sm-2" type="date" id="datefilter">
+		<input form="download" type="submit" value="Download Data" class="btn btn-primary">
 	</form>
+	
 </div>
 <table class="table table-bordered" style="width:100%; margin-top: 20px;">
 {%for TempReading in context %}
@@ -52,10 +49,16 @@
 	</tbody>
 {%endfor%}
 </table>
+
+{% if user.is_authenticated %}
+<p>Logged in: {{user.username}}</p>
+{%endif%}
+<a href="{% url 'my_logout' %}" method="POST" id="logout">Logout</a>
+
 </body>
 {% block javascript %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script>
 var today = new Date();
@@ -72,11 +75,11 @@ today = yyyy+'-'+mm+'-'+dd;
 document.getElementById("datefilter").setAttribute("max", today);
 </script>
 
-
 <script>
 $(document).ready(function() {
     $('#example').DataTable();
 } );
 </script>
+
 {% endblock %}
 </html>

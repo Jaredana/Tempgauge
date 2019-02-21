@@ -18,11 +18,16 @@
 
 <body>
 
-<form action="{% url 'welcome' %}" method="POST" id="schoolchoices">
+<form action="{% url 'gotodetail' %}" method="POST" id="schoolchoices">
     {% csrf_token %}
     {{form}}
     <input form="schoolchoices" type="submit" value="Submit" id="choice" class="btn btn-primary"/>
 </form>
+
+{% if user.is_authenticated %}
+<p>Logged in: {{user.username}}</p>
+{%endif%}
+<a href="{% url 'my_logout' %}" method="POST" id="logout">Logout</a>
 
 </body>
 </html>

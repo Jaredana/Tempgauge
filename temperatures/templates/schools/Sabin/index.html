@@ -54,6 +54,10 @@
 {%endfor%}
 </table>
 
+{% if user.is_authenticated %}
+<p>Logged in: {{user.username}}</p>
+{%endif%}
+<a href="{% url 'my_logout' %}" method="POST" id="logout">Logout</a>
 </body>
 {% block javascript %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -75,4 +79,5 @@ document.getElementById("datefilter").setAttribute("max", today);
 </script>
 
 {% endblock %}
+
 </html>
