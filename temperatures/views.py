@@ -1,27 +1,20 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from .models import TempReading, School
 from .forms import Schools
 from django.utils import timezone
 import csv
 from datetime import datetime
+
 # Create your views here.
 def index(request):
-	#user = request.POST.get('your_user')
-	#password = request.POST.get('your_pass')
-	#user = authenticate(request, username=user, password=password)
-	#if(user is not None):
-		#login(request, user)
-		#return redirect('welcome')
-	#else:
-		#return redirect('welcome')
 	logout(request)
 	return render(request, 'temperatures/index.html')
 	
@@ -42,32 +35,24 @@ def my_logout(request):
 	return redirect('index')
 
 #Defines the welcome page where the user selects their school to view more details about
+@login_required #checks if user is actually login()
 def welcome(request):
-	#need to check if user is logged in before loading page
-	if(request.user.is_authenticated):
-		print('test')
-		form = Schools()
-		return render(request, 'temperatures/welcome.html', {'form':form})
-	else:
-		print('text')
-		return redirect('index')
-	
-	#else:
-	#	choice = request.POST.get('schoolchoice') #Converted the school object to string for url formatting
-	#	return redirect('school', school = choice)
-	
+
+	print('test')
+	form = Schools()
+	return render(request, 'temperatures/welcome.html', {'form':form})
+
 def gotodetail(request):
 	choice = request.POST.get('schoolchoice') #Converted the school object to string for url formatting
 	return redirect('school', school = choice)
 
 def download_data(request):
 	filter = request.POST.get('downloadoptions')
-	#filter = int(filter)
 	data = filter_date(filter)
 	response = HttpResponse(content_type='text/csv')
 	response['Content-Disposition'] = 'attachment; filename="filtered_data.csv"'
-	#get from selection to determine how far to look back for data
 	
+	#get from selection to determine how far to look back for data
 	writer = csv.writer(response)
 	for x in data:
 		writer.writerow([x.date, x.temp, x.humidity, x.school])
@@ -75,6 +60,7 @@ def download_data(request):
 	return response
 
 #This view displays all the temperature readings of a particular school and 
+@login_required
 def detail(request, school):
 	url = 'schools/' + school + '/index.html'
 	readings = TempReading.objects.filter(school=school)
@@ -82,6 +68,7 @@ def detail(request, school):
 	return render(request, url, context)
 
 #This view is used to filter queries on a schools detail page. AKA lets the user sort between readings from the past; this is a date in the format yyyy-mm-dd
+@login_required
 def refreshdetail(request):
 	filter = request.POST.get('filteroptions')
 	if(type(filter)!= type(datetime)):
