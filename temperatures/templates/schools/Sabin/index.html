@@ -7,14 +7,16 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
 
+{% block title %}
 <head>
-<div id = "header">
-<h1 style="font-family: open-sans">Sabin</h1>
-<img src="{%static 'Tempgauge/nclogo.png' %}" alt="Logo" id="main_logo">
-
-</div>
+	<div id = "header">
+		<h1 id="toptext">{{school}}</h1>
+		<img src="{%static 'Tempgauge/nclogo.png' %}" alt="Logo" id="main_logo">
+	</div>
 </head>
+{% endblock %}
 
+{% block dataview %}
 <body>
 <div id="forms">
 	
@@ -54,11 +56,14 @@
 {%endfor%}
 </table>
 
+
 {% if user.is_authenticated %}
 <p>Logged in: {{user.username}}</p>
 {%endif%}
 <a href="{% url 'my_logout' %}" method="POST" id="logout">Logout</a>
 </body>
+{% endblock %}
+
 {% block javascript %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 

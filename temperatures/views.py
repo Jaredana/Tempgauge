@@ -64,7 +64,7 @@ def download_data(request):
 def detail(request, school):
 	url = 'schools/' + school + '/index.html'
 	readings = TempReading.objects.filter(school=school)
-	context = {'context': readings, 'name' : User.username}
+	context = {'context': readings, 'name' : User.username, 'choice': school}
 	return render(request, url, context)
 
 #This view is used to filter queries on a schools detail page. AKA lets the user sort between readings from the past; this is a date in the format yyyy-mm-dd

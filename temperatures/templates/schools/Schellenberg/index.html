@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends "../Sabin/index.html"}
+{% block title %}Schellenberg{% endblock %}
 
-</head>
-<body>
+{% block videdata %}
+{% endblock %}
 
-<p>Hello World {{TempReading.temp}}</p>
-<ul>
-{%for TempReading in context %}
-	<p>{{TempReading.date}}</p>
-	<li>{{TempReading.temp}} C</li>
-	<li>{{TempReading.humidity}}</li>
-{%endfor%}
-</ul>
-
-
-</body>
-</html>
+{%block javascript %}
+{% endblock %}
