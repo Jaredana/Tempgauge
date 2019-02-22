@@ -6,7 +6,7 @@ from django.template import loader
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from .models import TempReading, School
 from .forms import Schools
 from django.utils import timezone
@@ -20,7 +20,6 @@ def index(request):
 	
 
 def logged(request):
-
 	user = request.POST.get('your_name')
 	password = request.POST.get('your_pass')
 	user = authenticate(request, username=user, password=password)
@@ -36,6 +35,7 @@ def my_logout(request):
 
 #Defines the welcome page where the user selects their school to view more details about
 @login_required #checks if user is actually login()
+@permission_required('temperatures.Can_view_temp_readings')
 def welcome(request):
 
 	print('test')
@@ -61,6 +61,7 @@ def download_data(request):
 
 #This view displays all the temperature readings of a particular school and 
 @login_required
+@permission_required('temperatures.Can_view_temp_readings')
 def detail(request, school):
 	url = 'schools/' + school + '/index.html'
 	readings = TempReading.objects.filter(school=school)
@@ -69,6 +70,7 @@ def detail(request, school):
 
 #This view is used to filter queries on a schools detail page. AKA lets the user sort between readings from the past; this is a date in the format yyyy-mm-dd
 @login_required
+@permission_required('temperatures.Can_view_temp_readings')
 def refreshdetail(request):
 	filter = request.POST.get('filteroptions')
 	if(type(filter)!= type(datetime)):

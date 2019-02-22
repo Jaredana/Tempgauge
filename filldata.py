@@ -18,8 +18,6 @@ def choose_school():
 	choice = schools[(int(input())) - 1]
 	return choice
 
-
-
 def create_tempreading():
 	date = timezone.now()
 	print('Enter the temperature: ')
